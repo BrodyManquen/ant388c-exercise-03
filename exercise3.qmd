@@ -175,8 +175,8 @@ The relationship continues to be positive at the *Family* level.
 #### Create a new variable
 Create **diet_strategy** with conditional statement. If Fruit or Leaves >= 50% of the diet, the species will be assigned the *frugivore* or *folivore* category, respectively. All other species will be assigned *omnivore*
 ```{r}
-d <- d %>% mutate(diet_strategy=case_when(Fruit>=50 ~ "frugivore", Leaves>=50 ~ "folivore", Fruit<50&Leaves<50~"omnivore"))%>% relocate(Scientific_Name, Family, Genus, Species, diet_strategy)
-View(d)
+d <- d %>% mutate(diet_strategy=case_when(Fruit>=50 ~ "frugivore", Leaves>=50 ~ "folivore", Fruit<50&Leaves<50~"omnivore"))%>% relocate(Scientific_Name, Family, Genus, Species, diet_strategy, Fruit, Leaves)
+print(d)
 ```
 #### Boxplots
 ```{r}
@@ -200,5 +200,5 @@ d_8 <- d_8 %>% mutate(Binomial=paste(Genus, Species, sep=" ")) %>%
   arrange(Brain_size_family_mean) %>%
   relocate(Binomial, Family, Brain_size_family_mean) %>% #relocate Mean Family Brain Size to show in head()
   ungroup() #and ungrouped it at the end. If I used summarise(), I'd lose the nice Binomial variable I created
-view(d_8)
+print(d_8)
 ```

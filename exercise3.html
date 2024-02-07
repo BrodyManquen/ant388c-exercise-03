@@ -371,18 +371,40 @@ dbl (17): Brain_Size_Species_Mean, Body_mass_male_mean, Body_mass_female_mea...
 <h4 class="anchored" data-anchor-id="create-a-new-variable">Create a new variable</h4>
 <p>Create <strong>diet_strategy</strong> with conditional statement. If Fruit or Leaves &gt;= 50% of the diet, the species will be assigned the <em>frugivore</em> or <em>folivore</em> category, respectively. All other species will be assigned <em>omnivore</em></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">diet_strategy=</span><span class="fu">case_when</span>(Fruit<span class="sc">&gt;=</span><span class="dv">50</span> <span class="sc">~</span> <span class="st">"frugivore"</span>, Leaves<span class="sc">&gt;=</span><span class="dv">50</span> <span class="sc">~</span> <span class="st">"folivore"</span>, Fruit<span class="sc">&lt;</span><span class="dv">50</span><span class="sc">&amp;</span>Leaves<span class="sc">&lt;</span><span class="dv">50</span><span class="sc">~</span><span class="st">"omnivore"</span>))<span class="sc">%&gt;%</span> <span class="fu">relocate</span>(Scientific_Name, Family, Genus, Species, diet_strategy)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">view</span>(d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">diet_strategy=</span><span class="fu">case_when</span>(Fruit<span class="sc">&gt;=</span><span class="dv">50</span> <span class="sc">~</span> <span class="st">"frugivore"</span>, Leaves<span class="sc">&gt;=</span><span class="dv">50</span> <span class="sc">~</span> <span class="st">"folivore"</span>, Fruit<span class="sc">&lt;</span><span class="dv">50</span><span class="sc">&amp;</span>Leaves<span class="sc">&lt;</span><span class="dv">50</span><span class="sc">~</span><span class="st">"omnivore"</span>))<span class="sc">%&gt;%</span> <span class="fu">relocate</span>(Scientific_Name, Family, Genus, Species, diet_strategy, Fruit, Leaves)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 213 × 27
+   Scientific_Name             Family   Genus Species diet_strategy Fruit Leaves
+   &lt;chr&gt;                       &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; 
+ 1 Allenopithecus_nigroviridis Cercopi… Alle… nigrov… &lt;NA&gt;           NA   &lt;NA&gt;  
+ 2 Allocebus_trichotis         Cercopi… Allo… tricho… &lt;NA&gt;           NA   &lt;NA&gt;  
+ 3 Alouatta_belzebul           Atelidae Alou… belzeb… frugivore      57.3 19.1  
+ 4 Alouatta_caraya             Atelidae Alou… caraya  folivore       23.8 67.7  
+ 5 Alouatta_guariba            Atelidae Alou… guariba folivore        5.2 73    
+ 6 Alouatta_palliata           Atelidae Alou… pallia… folivore       33.1 56.4  
+ 7 Alouatta_pigra              Atelidae Alou… pigra   omnivore       40.8 45.1  
+ 8 Alouatta_seniculus          Atelidae Alou… senicu… omnivore       40   48.1  
+ 9 Aotus_azarai                Cebidae  Aotus azarai  omnivore       45   41    
+10 Aotus_brumbacki             Cebidae  Aotus brumba… &lt;NA&gt;           NA   &lt;NA&gt;  
+# ℹ 203 more rows
+# ℹ 20 more variables: Brain_Size_Species_Mean &lt;dbl&gt;,
+#   Body_mass_male_mean &lt;dbl&gt;, Body_mass_female_mean &lt;dbl&gt;,
+#   MeanGroupSize &lt;dbl&gt;, AdultMales &lt;dbl&gt;, AdultFemale &lt;dbl&gt;,
+#   GR_MidRangeLat_dd &lt;dbl&gt;, Precip_Mean_mm &lt;dbl&gt;, Temp_Mean_degC &lt;dbl&gt;,
+#   HomeRange_km2 &lt;dbl&gt;, DayLength_km &lt;dbl&gt;, Fauna &lt;chr&gt;,
+#   Canine_Dimorphism &lt;dbl&gt;, Feed &lt;dbl&gt;, Move &lt;dbl&gt;, Rest &lt;dbl&gt;, …</code></pre>
+</div>
 </div>
 </section>
 <section id="boxplots" class="level4">
 <h4 class="anchored" data-anchor-id="boxplots">Boxplots</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wesanderson)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>d <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(diet_strategy)), <span class="co">#remove NAs from plots</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x=</span>diet_strategy, <span class="at">y=</span>MeanGroupSize,<span class="at">fill=</span>diet_strategy)) <span class="sc">+</span> <span class="co">#set aesthetics</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.4</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>, <span class="at">show.legend=</span><span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">wes_palette</span>(<span class="st">"GrandBudapest2"</span>))<span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Mean Group Size by Dietary Strategy"</span>, <span class="at">x=</span><span class="st">"Dietary Strategy"</span>, <span class="at">y=</span> <span class="st">"Mean Group Size"</span>)  <span class="co">#set labels  </span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wesanderson)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>d <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(diet_strategy)), <span class="co">#remove NAs from plots</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x=</span>diet_strategy, <span class="at">y=</span>MeanGroupSize,<span class="at">fill=</span>diet_strategy)) <span class="sc">+</span> <span class="co">#set aesthetics</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.4</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>, <span class="at">show.legend=</span><span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">wes_palette</span>(<span class="st">"GrandBudapest2"</span>))<span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Mean Group Size by Dietary Strategy"</span>, <span class="at">x=</span><span class="st">"Dietary Strategy"</span>, <span class="at">y=</span> <span class="st">"Mean Group Size"</span>)  <span class="co">#set labels  </span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="exercise3_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -393,16 +415,35 @@ dbl (17): Brain_Size_Species_Mean, Body_mass_male_mean, Body_mass_female_mea...
 <section id="part-8-one-line-code-challenge-with-dplyr-and-forward-piping" class="level3">
 <h3 class="anchored" data-anchor-id="part-8-one-line-code-challenge-with-dplyr-and-forward-piping">Part 8: One-line Code Challenge with {dplyr} and forward piping</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>d_8 <span class="ot">&lt;-</span> d <span class="co">#didn't want to overwrite d while testing this out, d_8 for d, part 8</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>d_8 <span class="ot">&lt;-</span> d_8 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Binomial=</span><span class="fu">paste</span>(Genus, Species, <span class="at">sep=</span><span class="st">" "</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Binomial, Family, Brain_Size_Species_Mean, Body_mass_male_mean) <span class="sc">%&gt;%</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Family) <span class="sc">%&gt;%</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Brain_size_family_mean=</span><span class="fu">mean</span>(Brain_Size_Species_Mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="co">#I wanted to preserve genus/species data</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Body_mass_male_family_mean=</span><span class="fu">mean</span>(Body_mass_male_mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="co">#so I used mutate(), not summarise()</span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Brain_size_family_mean) <span class="sc">%&gt;%</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(Binomial, Family, Brain_size_family_mean) <span class="sc">%&gt;%</span> <span class="co">#relocate Mean Family Brain Size to show in head()</span></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="co">#and ungrouped it at the end. If I used summarise(), I'd lose the nice Binomial variable I created</span></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="fu">view</span>(d_8)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>d_8 <span class="ot">&lt;-</span> d <span class="co">#didn't want to overwrite d while testing this out, d_8 for d, part 8</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>d_8 <span class="ot">&lt;-</span> d_8 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Binomial=</span><span class="fu">paste</span>(Genus, Species, <span class="at">sep=</span><span class="st">" "</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Binomial, Family, Brain_Size_Species_Mean, Body_mass_male_mean) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Family) <span class="sc">%&gt;%</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Brain_size_family_mean=</span><span class="fu">mean</span>(Brain_Size_Species_Mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="co">#I wanted to preserve genus/species data</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Body_mass_male_family_mean=</span><span class="fu">mean</span>(Body_mass_male_mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="co">#so I used mutate(), not summarise()</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Brain_size_family_mean) <span class="sc">%&gt;%</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(Binomial, Family, Brain_size_family_mean) <span class="sc">%&gt;%</span> <span class="co">#relocate Mean Family Brain Size to show in head()</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="co">#and ungrouped it at the end. If I used summarise(), I'd lose the nice Binomial variable I created</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(d_8)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 213 × 6
+   Binomial            Family      Brain_size_family_mean Brain_Size_Species_M…¹
+   &lt;chr&gt;               &lt;chr&gt;                        &lt;dbl&gt;                  &lt;dbl&gt;
+ 1 Tarsius bancanus    Tarsiidae                     3.26                   3.16
+ 2 Tarsius dentatus    Tarsiidae                     3.26                  NA   
+ 3 Tarsius syrichta    Tarsiidae                     3.26                   3.36
+ 4 Cheirogaleus major  Cheirogali…                   4.04                   5.81
+ 5 Cheirogaleus medius Cheirogali…                   4.04                   2.6 
+ 6 Microcebus murinus  Cheirogali…                   4.04                   1.63
+ 7 Microcebus myoxinus Cheirogali…                   4.04                  NA   
+ 8 Microcebus rufus    Cheirogali…                   4.04                   1.72
+ 9 Mirza coquereli     Cheirogali…                   4.04                   5.8 
+10 Phaner furcifer     Cheirogali…                   4.04                   6.68
+# ℹ 203 more rows
+# ℹ abbreviated name: ¹​Brain_Size_Species_Mean
+# ℹ 2 more variables: Body_mass_male_mean &lt;dbl&gt;,
+#   Body_mass_male_family_mean &lt;dbl&gt;</code></pre>
+</div>
 </div>
 </section>
 </section>
