@@ -23,22 +23,22 @@ Relationship between day range length & time spent moving by *species* & *family
 
 Species, **without** transformation:
 ```{r}
-p <- ggplot(data=d, aes(x=Move, y=DayLength_km)) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="Day Length Range (km) vs. Time Spent Moving", x="Time spent Moving", y="Day Length Range (km)")
+p <- ggplot(data=d, aes(x=Move, y=DayLength_km)) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="Day Length Range (km) vs. Time Spent Moving", x="Time spent Moving", y="Day Length Range (km)") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 Species, **with** transformation (log(Move), log(DLR):
 ```{r}
-p <- ggplot(data=d, aes(x=log(Move), y=log(DayLength_km))) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="log(Day Length Range (km)) vs. log(Time Spent Moving)", x="log(Move)", y="log(Day Length Range (km))")
+p <- ggplot(data=d, aes(x=log(Move), y=log(DayLength_km))) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="log(Day Length Range (km)) vs. log(Time Spent Moving)", x="log(Move)", y="log(Day Length Range (km))") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 Species, **without** transformation; Colored by Family:
 ```{r}
-p <- ggplot(data=d, aes(x=Move, y=DayLength_km)) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="Day Length Range (km) vs. Time Spent Moving", x="Time spent Moving", y="Day Length Range (km)")
+p <- ggplot(data=d, aes(x=Move, y=DayLength_km)) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="Day Length Range (km) vs. Time Spent Moving", x="Time spent Moving", y="Day Length Range (km)") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 Species, **with** log transformations; Colored by Family:
 ```{r}
-p <- ggplot(data=d, aes(x=log(Move), y=log(DayLength_km))) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="log(Day Length Range (km)) vs. log(Time Spent Moving)", x="log(Move)", y="log(Day Length Range (km))")
+p <- ggplot(data=d, aes(x=log(Move), y=log(DayLength_km))) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="log(Day Length Range (km)) vs. log(Time Spent Moving)", x="log(Move)", y="log(Day Length Range (km))") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 There seems to be a positive relationship between time spent moving and day length range (km) for individual species!
@@ -75,22 +75,22 @@ Relationship between day range length & group size by *species* & *family*:
 
 Species, **without** transformation:
 ```{r}
-p <- ggplot(data=d, aes(x=MeanGroupSize, y=DayLength_km)) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="Day Length Range (km) vs. Mean Group Size", x="Mean Group Size", y="Day Length Range (km)")
+p <- ggplot(data=d, aes(x=MeanGroupSize, y=DayLength_km)) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="Day Length Range (km) vs. Mean Group Size", x="Mean Group Size", y="Day Length Range (km)") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 Species, **with** transformation (log(MeanGroupSize), log(DLR):
 ```{r}
-p <- ggplot(data=d, aes(x=log(MeanGroupSize), y=log(DayLength_km))) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="log(Day Length Range (km)) vs. log(MeanGroupSize)", x="log(GroupSize)", y="log(Day Length Range (km))")
+p <- ggplot(data=d, aes(x=log(MeanGroupSize), y=log(DayLength_km))) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="log(Day Length Range (km)) vs. log(MeanGroupSize)", x="log(GroupSize)", y="log(Day Length Range (km))") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 Species, **without** transformation; Colored by Family:
 ```{r}
-p <- ggplot(data=d, aes(x=MeanGroupSize, y=DayLength_km)) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="Day Length Range (km) vs. Mean Group Size", x="Mean Group Size", y="Day Length Range (km)")
+p <- ggplot(data=d, aes(x=MeanGroupSize, y=DayLength_km)) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="Day Length Range (km) vs. Mean Group Size", x="Mean Group Size", y="Day Length Range (km)") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 Species, **with** log transformations; Colored by Family:
 ```{r}
-p <- ggplot(data=d, aes(x=log(MeanGroupSize), y=log(DayLength_km))) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="log(Day Length Range (km)) vs. log(MeanGroupSize)", x="log(MeanGroupSize)", y="log(Day Length Range (km))")
+p <- ggplot(data=d, aes(x=log(MeanGroupSize), y=log(DayLength_km))) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="log(Day Length Range (km)) vs. log(MeanGroupSize)", x="log(MeanGroupSize)", y="log(Day Length Range (km))") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 There seems to be a positive relationship between mean group size and day length range (km) for individual species!
@@ -99,8 +99,8 @@ However, some families have a lot of internal diversity, such as the *Lemuridae*
 
 Here's an exponential fit:
 ```{r}
-p <- ggplot(data=d, aes(x=log(MeanGroupSize), y=log(DayLength_km))) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="log(Day Length Range (km)) vs. log(MeanGroupSize)", x="log(MeanGroupSize)", y="log(Day Length Range (km))")
-p + geom_smooth(method="lm", formula=(y ~ exp(x)), na.rm=TRUE)
+p <- ggplot(data=d, aes(x=log(MeanGroupSize), y=log(DayLength_km))) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="log(Day Length Range (km)) vs. log(MeanGroupSize)", x="log(MeanGroupSize)", y="log(Day Length Range (km))") + facet_wrap(~ Family)
+p + geom_smooth(method="lm", formula=(y ~ exp(x)), na.rm=TRUE) 
 ```
 
 #### Family-level
@@ -138,14 +138,14 @@ Relationship between body size dimorphism & canine size dimorphism by *species* 
 
 Species, **without** transformation:
 ```{r}
-p <- ggplot(data=d, aes(x=BSD, y=Canine_Dimorphism)) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="Canine Size Dimorphism vs. Body Size Dimorphism", x="Body Size Dimorphism", y="Canine Size Dimorphism")
+p <- ggplot(data=d, aes(x=BSD, y=Canine_Dimorphism)) + geom_point(aes(color=factor(Species)), na.rm=TRUE, show.legend = FALSE) + labs(title="Canine Size Dimorphism vs. Body Size Dimorphism", x="Body Size Dimorphism", y="Canine Size Dimorphism") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 The clear linear relationship and distribution gives no need for log transformations here.
 
 Species, **without** transformation; Colored by Family:
 ```{r}
-p <- ggplot(data=d, aes(x=BSD, y=Canine_Dimorphism)) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="Canine Size Dimorphism vs. Body Size Dimorphism", x="Body Size Dimorphism", y="Canine Size Dimorphism")
+p <- ggplot(data=d, aes(x=BSD, y=Canine_Dimorphism)) + geom_point(aes(color=factor(Family)), na.rm=TRUE, show.legend = TRUE) + labs(title="Canine Size Dimorphism vs. Body Size Dimorphism", x="Body Size Dimorphism", y="Canine Size Dimorphism") + facet_wrap(~ Family)
 p + geom_smooth(method=lm, na.rm=TRUE)
 ```
 
